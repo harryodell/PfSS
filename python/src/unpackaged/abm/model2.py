@@ -9,10 +9,16 @@ import random
 import math
 
 
+agents =[]
+
 
 ### first agent
 y0 = random.randint(0,100)
 x0 = random.randint(0,100)
+
+# append coordinates to agent list
+agents.append([y0,x0])
+print(agents)
 
 # random walk
 if random.random() < 0.5:
