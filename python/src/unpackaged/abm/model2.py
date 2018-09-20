@@ -1,6 +1,6 @@
 import random
 import operator
-import matplotlib.pyplot
+import matplotlib.pyplot 
 import itertools
 import time
 import agentframework
@@ -19,7 +19,12 @@ with open('in.txt', 'r') as file_for_reading:
 #        for value in row:
 #            rowlist.append(value)
         environment.append(rowlisty)
-            
+
+#lenx = len(environment)
+#leny = len(environment[1])
+
+data = pd.read_csv('in.txt', header = None)
+
 
 # plot data
 # matplotlib.pyplot.imshow(environment)
@@ -28,14 +33,15 @@ with open('in.txt', 'r') as file_for_reading:
 
 # initialize 
 num_of_agents = 10
-num_of_iterations = 100000
+num_of_iterations = 1000
+neighbourhood = 20
 agents = []
-
 
 # make the agents
 for i in range(num_of_agents):
-    agents.append(agentframework.Agent(environment))
-
+    agents.append(agentframework.Agent(environment, agents,
+                                       neighbourhood))
+    
 
 # move the agents in random direction 
 #for j in range(num_of_iterations):
@@ -43,19 +49,27 @@ for i in range(num_of_agents):
 #        agents[i].move()
 
 
-# eat
+# move. eat, sick 
 for j in range(num_of_iterations):
     for i in range(num_of_agents):
         agents[i].move()
         agents[i].eat()
-
+        agents[i].sick()
+        agents[i].share_with_neighbours(neighbourhood)
+        
+# print agents x, y and store        
+for i in range(num_of_agents):
+    print(f"Agent {i}: x = {agents[i].x}, "
+                          f"y = {agents[i].y}, "
+                          f"store = {agents[i].store}")
+ 
 
 # plot agents on grid
-matplotlib.pyplot.xlim(0, 99)
-matplotlib.pyplot.ylim(0, 99)
+matplotlib.pyplot.xlim(0, lenx)
+matplotlib.pyplot.ylim(0, leny)
 matplotlib.pyplot.imshow(environment)
 for i in range(num_of_agents):
-    matplotlib.pyplot.scatter(agents[i].x, agents[i].y)
+    matplotlib.pyplot.scatter(agents[i].x, agents[i].y, s=50)
 matplotlib.pyplot.show()
 
 
@@ -79,24 +93,24 @@ matplotlib.pyplot.show()
 #print("time = " + str(end - start))
 
 # write environment to file
-f2 = open('env.txt', 'w', newline='') 
-writer = csv.writer(f2, delimiter=' ')
-for row in environment:		
-	writer.writerow(row)		# List of values.
-f2.close()
+#f2 = open('env.txt', 'w', newline='') 
+#writer = csv.writer(f2, delimiter=' ')
+#for row in environment:		
+#	writer.writerow(row)		# List of values.
+#f2.close()
 
 
 # write agent store to file
 for i in agents:
     print(i.store)
 
-f3 = open('stored.txt', 'w', newline='') 
-writer = csv.writer(f3, delimiter=' ')
-for i in agents:
-    listy = []
-    listy.append(i.store)
-    writer.writerow(listy)		# List of values.
-f3.close()
+#f3 = open('stored.txt', 'w', newline='') 
+#writer = csv.writer(f3, delimiter=' ')
+#for i in agents:
+#    listy = []
+#    listy.append(i.store)
+#    writer.writerow(listy)		# List of values.
+#f3.close()
 
 
 

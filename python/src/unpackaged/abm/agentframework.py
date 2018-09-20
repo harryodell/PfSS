@@ -1,23 +1,29 @@
 import random
 
 class Agent:    
-    def __init__(self, environment):
-        self.y = random.randint(0,99)        
-        self.x = random.randint(0,99)
-        self.environment = environment
+    def __init__(self, environment, agents, neighbourhood):
+        self.agents = agents
+        self.environment = environment        
+        self.y = random.randint(0, len(self.environment[1]))        
+        self.x = random.randint(0, len(self.environment))
         self.store = 0 
+        self.neighbourhood = neighbourhood
 
+
+    def __str__(self):        
+        return str(self.y) + ',' + str(self.x) + ',' + str(self.store)
         
+    
     def move(self):
         if random.random() < 0.5:
-            self.x = (self.x + 1) % 100
+            self.x = (self.x + 1) % len(self.environment)
         else:
-            self.x = (self.x - 1) % 100
+            self.x = (self.x - 1) % len(self.environment)
 
         if random.random() < 0.5:
-            self.y = (self.y + 1) % 100
+            self.y = (self.y + 1) % len(self.environment[1])
         else:
-            self.y = (self.y - 1) % 100        
+            self.y = (self.y - 1) % len(self.environment[1])        
 
 
     def eat(self):
@@ -27,6 +33,13 @@ class Agent:
         else:
             self.store += self.environment[self.y][self.x]
             self.environment[self.y][self.x] = 0    
+            
+            
+    def sick(self):
+        if self.store > 100:
+            self.environment[self.y][self.x] += self.store
+            self.store = 0
+    
     
     @property
     def x(self):
@@ -53,7 +66,8 @@ class Agent:
 #print(a.y, a.x)
 
 
-
+#a = Agent(environment, agents, neighbourhood)
+#a.neighbourhood
 
 
 
