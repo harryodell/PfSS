@@ -1,4 +1,6 @@
 import random
+import math
+# import itertools
 
 class Agent:    
     def __init__(self, environment, agents, neighbourhood):
@@ -41,6 +43,26 @@ class Agent:
             self.store = 0
     
     
+    def distance_between(self, other):
+        return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
+
+    
+    def share_with_neighbours(self, neighbourhood):
+        i = 0
+        for agent in self.agents:
+            i += 1
+            if agent != self:
+                distance = self.distance_between(agent) 
+                if distance <= neighbourhood:
+                    average = (self.store + agent.store)/2
+                    self.store = average
+                    agent.store = average
+                    #print("sharing " + str(distance) + " " + str(average))
+                    
+                    #print(f"{str(self)} sharing with {str(agent)}: dist = {str(distance)}, ave = {str(average)}")
+                    print(f"Agent ({self}) sharing with Agent ({agent}): dist = {str(distance)}, ave = {str(average)}")
+                    print("\n")
+
     @property
     def x(self):
         return self._x
@@ -59,8 +81,7 @@ class Agent:
         
     
 
-#a = Agent()
-#print(a.y, a.x)
+
 
 #a.move()
 #print(a.y, a.x)

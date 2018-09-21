@@ -33,15 +33,19 @@ data = pd.read_csv('in.txt', header = None)
 
 # initialize 
 num_of_agents = 10
-num_of_iterations = 1000
+num_of_iterations = 100
 neighbourhood = 20
 agents = []
+leny = len(environment[1])
+lenx = len(environment)
 
 # make the agents
 for i in range(num_of_agents):
     agents.append(agentframework.Agent(environment, agents,
                                        neighbourhood))
-    
+ 
+# make the agents using list comp
+agents = [agentframework.Agent(environment, agents, neighbourhood) for n in range(num_of_agents)]
 
 # move the agents in random direction 
 #for j in range(num_of_iterations):
@@ -50,12 +54,22 @@ for i in range(num_of_agents):
 
 
 # move. eat, sick 
-for j in range(num_of_iterations):
+for j in range(num_of_iterations): 
     for i in range(num_of_agents):
         agents[i].move()
         agents[i].eat()
         agents[i].sick()
         agents[i].share_with_neighbours(neighbourhood)
+
+for j in range(num_of_iterations):
+    random.shuffle(agents)
+    for i, agent in enumerate(agents):
+        print(i)
+        agent.move()
+        agent.eat()
+        agent.sick()
+        agent.share_with_neighbours(neighbourhood)
+        
         
 # print agents x, y and store        
 for i in range(num_of_agents):
