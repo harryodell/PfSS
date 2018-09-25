@@ -1,6 +1,5 @@
 import random
 import math
-# import itertools
 
 class Agent:    
     def __init__(self, environment, agents, neighbourhood):
@@ -79,29 +78,7 @@ class Agent:
     def y(self, value):
         self._y = value
         
-    
-
-
-
-#a.move()
-#print(a.y, a.x)
-
-
-#a = Agent(environment, agents, neighbourhood)
-#a.neighbourhood
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        
+        
+        

@@ -1,31 +1,78 @@
 import random
 import operator
-import matplotlib.pyplot
+import matplotlib.pyplot 
+import itertools
+import time
 import agentframework
+import csv 
+import pandas as pd
+import matplotlib.animation 
 
-def distance_between(agents_row_a, agents_row_b):
-    return (((agents_row_a.x - agents_row_b.x)**2) + 
-    ((agents_row_a.y - agents_row_b.y)**2))**0.5
+# read in data 
+environment = []
+with open('in.txt', 'r') as file_for_reading:
+    for row in file_for_reading:
+        rowlist = row.split(',')
+        rowlisty = list(map(int, rowlist))
+#        rowlist = []	
+#        for value in row:
+#            rowlist.append(value)
+        environment.append(rowlisty)
 
+# initialize 
 num_of_agents = 10
-num_of_iterations = 100
+num_of_iterations = 10
+neighbourhood = 20
 agents = []
+leny = len(environment[1])
+lenx = len(environment)
+ 
+# make the agents using list comp
+agents = [agentframework.Agent(environment, agents, neighbourhood) for n in range(num_of_agents)]
 
-# Make the agents.
-for i in range(num_of_agents):
-    agents.append(agentframework.Agent())
+fig = matplotlib.pyplot.figure(figsize=(7, 7))
+ax = fig.add_axes([0, 0, 1, 1])
 
-# Move the agents.
-for j in range(num_of_iterations):
+def update(blah):
+    
+    fig.clear()   
+    
+
+    for j in range(num_of_iterations):
+        random.shuffle(agents)
+        for agent in agents:
+            agent.move()
+            agent.eat()
+            agent.sick()
+            agent.share_with_neighbours(neighbourhood)
+            
+        
+    # plot agents on grid
+    matplotlib.pyplot.xlim(0, lenx)
+    matplotlib.pyplot.ylim(0, leny)
+    matplotlib.pyplot.imshow(environment)
     for i in range(num_of_agents):
-        agents[i].move()
+        matplotlib.pyplot.scatter(agents[i].x, agents[i].y, s=50)
 
-matplotlib.pyplot.xlim(0, 99)
-matplotlib.pyplot.ylim(0, 99)
-for i in range(num_of_agents):
-    matplotlib.pyplot.scatter(agents[i].x, agents[i].y)
+
+
+#animation = matplotlib.animation.FuncAnimation(fig, update, interval=1)
+#animation = matplotlib.animation.FuncAnimation(fig, update, repeat=False, frames=num_of_iterations)
+animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, repeat=False, frames=num_of_iterations) 
 matplotlib.pyplot.show()
 
-for agents_row_a in agents:
-    for agents_row_b in agents:
-        distance = distance_between(agents_row_a, agents_row_b)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

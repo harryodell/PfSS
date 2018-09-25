@@ -23,7 +23,7 @@ with open('in.txt', 'r') as file_for_reading:
 #lenx = len(environment)
 #leny = len(environment[1])
 
-data = pd.read_csv('in.txt', header = None)
+# data = pd.read_csv('in.txt', header = None)
 
 
 # plot data
@@ -54,20 +54,21 @@ agents = [agentframework.Agent(environment, agents, neighbourhood) for n in rang
 
 
 # move. eat, sick 
-for j in range(num_of_iterations): 
-    for i in range(num_of_agents):
-        agents[i].move()
-        agents[i].eat()
-        agents[i].sick()
-        agents[i].share_with_neighbours(neighbourhood)
+#for j in range(num_of_iterations):
+#    random.shuffle(agents)
+#    for i, agent in enumerate(agents):
+#        print(i)
+#        agent.move()
+#        agent.eat()
+#        # agent.sick()
+#        agent.share_with_neighbours(neighbourhood)
 
 for j in range(num_of_iterations):
     random.shuffle(agents)
-    for i, agent in enumerate(agents):
-        print(i)
+    for agent in agents:
         agent.move()
         agent.eat()
-        agent.sick()
+        # agent.sick()
         agent.share_with_neighbours(neighbourhood)
         
         
