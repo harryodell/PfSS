@@ -16,14 +16,15 @@ with open('in.txt', 'r') as file_for_reading:
 #            rowlist.append(value)
         environment.append(rowlisty)
 
-# initialize 
+# initialie variables
 num_of_agents = 10
-num_of_iterations = 10000
+num_of_iterations = 100
 neighbourhood = 20
 agents = []
 leny = len(environment[1])
 lenx = len(environment)
 carry_on = True
+a = 0 
  
 # make the agents using list comp
 agents = [agentframework.Agent(environment, agents, neighbourhood) for n in range(num_of_agents)]
@@ -45,11 +46,11 @@ def update(blah):
             # agent.sick()
             agent.share_with_neighbours(neighbourhood)
             
-    if sum(sum(x) for x in environment) < totalenv*0.98:
+    if sum(sum(x) for x in environment) < totalenv*0.1:
         carry_on = False
         print("Stopping condition met - Environent depleted")
         
-        
+       
     # plot agents on grid
     matplotlib.pyplot.xlim(0, lenx)
     matplotlib.pyplot.ylim(0, leny)
@@ -57,19 +58,16 @@ def update(blah):
     for i in range(num_of_agents):
         matplotlib.pyplot.scatter(agents[i].x, agents[i].y, s=50)
 
-def gen_function(b = [0]):
+def gen_function(blah = [0]):
     a = 0
     global carry_on #Not actually needed as we're not assigning, but clearer
     while (a < num_of_iterations) & (carry_on):
         yield a			# Returns control and waits next call.
         a += 1
-    else:
-        print("Stopping condition met - Max iterations reached")
-        
 
 #animation = matplotlib.animation.FuncAnimation(fig, update, interval=1)
 #animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, repeat=False, frames=num_of_iterations) 
-animation = matplotlib.animation.FuncAnimation(fig, update, frames=gen_function, repeat=False)
+animation = matplotlib.animation.FuncAnimation(fig, update, interval = 1, frames=gen_function, repeat=False)
 matplotlib.pyplot.show()
 
 
