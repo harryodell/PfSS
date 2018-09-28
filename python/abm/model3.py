@@ -18,10 +18,12 @@ with open('in.txt', 'r') as file_for_reading:
         environment.append(rowlisty)
 
 # initialie variables
-num_of_agents = 10
+num_of_agents = 5
+num_of_wolves = 100
 num_of_iterations = 100
 neighbourhood = 20
 agents = []
+wolves = []
 leny = len(environment[1])
 lenx = len(environment)
 carry_on = True
@@ -34,6 +36,7 @@ colours = list(colors._colors_full_map.values())
 
 # make the agents using list comp
 agents = [agentframework.Agent(environment, agents, neighbourhood, colours) for n in range(num_of_agents)]
+wolves = [agentframework.Wolf(environment, wolves, neighbourhood, agents) for n in range(num_of_wolves)]
 
 
 def update(blah):
@@ -48,6 +51,11 @@ def update(blah):
             agent.eat()
             # agent.sick()
             agent.share_with_neighbours(neighbourhood)
+    
+    for i in range(num_of_iterations):
+        for wolf in wolves:
+            wolf.move()
+            wolf.eatSheep(agents, neighbourhood)
             
     if sum(sum(x) for x in environment) < totalenv*0.8:
         carry_on = False
@@ -61,7 +69,10 @@ def update(blah):
      #   matplotlib.pyplot.scatter(agents[i].x, agents[i].y, s=50)
     for agent in agents:
         matplotlib.pyplot.scatter(agent.x, agent.y, s=50, c = agent.colours)
-        
+
+    for wolf in wolves:
+        matplotlib.pyplot.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
+
 
 
 def gen_function(blah = [0]):
@@ -77,17 +88,6 @@ def gen_function(blah = [0]):
 animation = matplotlib.animation.FuncAnimation(fig, update, interval = 1, frames=gen_function, repeat=False)
 matplotlib.pyplot.show()
 
-
-
-
-
-
-
-
-
-
-for agent in agents:
-    print(agent.colours)
 
 
 

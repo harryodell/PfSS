@@ -6,6 +6,7 @@ import time
 import agentframework
 import csv 
 import pandas as pd
+import matplotlib.colors as colors
 
 #start = time.clock()
  
@@ -38,14 +39,19 @@ neighbourhood = 20
 agents = []
 leny = len(environment[1])
 lenx = len(environment)
+colours = list(colors._colors_full_map.values())
+wolves = []
+num_of_wolves = 100
 
 # make the agents
 for i in range(num_of_agents):
     agents.append(agentframework.Agent(environment, agents,
-                                       neighbourhood))
+                                       neighbourhood, colours))
+    
+wolves = [agentframework.Wolf(environment, wolves, neighbourhood, agents) for n in range(num_of_wolves)]
  
 # make the agents using list comp
-agents = [agentframework.Agent(environment, agents, neighbourhood) for n in range(num_of_agents)]
+#agents = [agentframework.Agent(environment, agents, neighbourhood) for n in range(num_of_agents)]
 
 # move the agents in random direction 
 #for j in range(num_of_iterations):
@@ -71,7 +77,14 @@ for j in range(num_of_iterations):
         # agent.sick()
         agent.share_with_neighbours(neighbourhood)
         
-        
+   
+for i in range(num_of_iterations):
+    for wolf in wolves:
+        wolf.move()
+        wolf.eatSheep(agents, neighbourhood)
+
+
+     
 # print agents x, y and store        
 for i in range(num_of_agents):
     print(f"Agent {i}: x = {agents[i].x}, "
@@ -85,6 +98,8 @@ matplotlib.pyplot.ylim(0, leny)
 matplotlib.pyplot.imshow(environment)
 for i in range(num_of_agents):
     matplotlib.pyplot.scatter(agents[i].x, agents[i].y, s=50)
+for wolf in wolves:
+    matplotlib.pyplot.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
 matplotlib.pyplot.show()
 
 

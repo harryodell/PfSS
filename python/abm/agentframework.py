@@ -48,9 +48,9 @@ class Agent:
 
     
     def share_with_neighbours(self, neighbourhood):
-        i = 0
+        #i = 0
         for agent in self.agents:
-            i += 1
+            #i += 1
             if agent != self:
                 distance = self.distance_between(agent) 
                 if distance <= neighbourhood:
@@ -62,6 +62,7 @@ class Agent:
                     #print(f"{str(self)} sharing with {str(agent)}: dist = {str(distance)}, ave = {str(average)}")
                     print(f"Agent ({self}) sharing with Agent ({agent}): dist = {str(distance)}, ave = {str(average)}")
                     print("\n")
+
 
     @property
     def x(self):
@@ -78,6 +79,61 @@ class Agent:
     @y.setter 
     def y(self, value):
         self._y = value
+        
+        
+        
+        
+        
+        
+class Wolf:
+    def __init__(self, environment, wolves, neighbourhood, agents):
+        self.wolves = wolves
+        self.environment = environment    
+        self.y = random.randint(0, len(self.environment[1]))        
+        self.x = random.randint(0, len(self.environment))
+        self.neighbourhood = neighbourhood
+        self.colours = 'black'
+        
+        
+    def move(self):
+        if random.random() < 0.5:
+            self.x = (self.x + 1) % len(self.environment)
+        else:
+            self.x = (self.x - 1) % len(self.environment)
+
+        if random.random() < 0.5:
+            self.y = (self.y + 1) % len(self.environment[1])
+        else:
+            self.y = (self.y - 1) % len(self.environment[1])            
+
+    def distance_between(self, other):
+        return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)    
+    
+    def eatSheep(self, agents, neighbourhood):
+        for wolf in self.wolves:
+            for agent in agents:
+                distance = self.distance_between(agent) 
+                if distance <= neighbourhood:
+                    print('eat')
+                    #del(agent)
+                    
+        
+        
+        
+        
+        
+           
+        
+#num_of_wolves = 5
+#neighbourhood = 20
+#wolves = []
+#wolves = [Wolf(environment, wolves, neighbourhood) for n in range(num_of_wolves)]
+        
+        
+        
+        
+        
+        
         
         
         
