@@ -2,17 +2,18 @@ import random
 import math
 
 class Agent:    
-    def __init__(self, environment, agents, neighbourhood):
+    def __init__(self, environment, agents, neighbourhood, colours):
         self.agents = agents
         self.environment = environment        
         self.y = random.randint(0, len(self.environment[1]))        
         self.x = random.randint(0, len(self.environment))
         self.store = 0 
         self.neighbourhood = neighbourhood
+        self.colours = random.choice(colours)
 
 
     def __str__(self):        
-        return str(self.y) + ',' + str(self.x) + ',' + str(self.store)
+        return str(self.y) + ',' + str(self.x) + ',' + str(self.store) + ',' + str(self.colours)
         
     
     def move(self):
