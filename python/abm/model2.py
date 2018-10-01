@@ -1,12 +1,13 @@
 import random
 import operator
-import matplotlib.pyplot 
+import matplotlib.pyplot as plt 
 import itertools
 import time
 import agentframework
 import csv 
 import pandas as pd
 import matplotlib.colors as colors
+
 
 #start = time.clock()
  
@@ -28,8 +29,8 @@ with open('in.txt', 'r') as file_for_reading:
 
 
 # plot data
-# matplotlib.pyplot.imshow(environment)
-# matplotlib.pyplot.show()
+# plt.imshow(environment)
+# plt.show()
 
 
 # initialize 
@@ -69,6 +70,10 @@ wolves = [agentframework.Wolf(environment, wolves, neighbourhood, agents) for n 
 #        # agent.sick()
 #        agent.share_with_neighbours(neighbourhood)
 
+
+def distance_between(wolf, agent):
+    return (((agent.x - wolf.x)**2) + ((agent.y - wolf.y)**2))**0.5
+
 for j in range(num_of_iterations):
     random.shuffle(agents)
     for agent in agents:
@@ -76,31 +81,85 @@ for j in range(num_of_iterations):
         agent.eat()
         # agent.sick()
         agent.share_with_neighbours(neighbourhood)
-        
-   
+
+
 for i in range(num_of_iterations):
     for wolf in wolves:
         wolf.move()
         wolf.eatSheep(agents, neighbourhood)
 
 
-     
+        
+result = []
+for k in range(num_of_iterations):
+    random.shuffle(agents)
+    random.shuffle(wolves)
+    for agent in agents:
+        agent.move()
+        agent.eat()
+        # agent.sick()
+        #agent.share_with_neighbours(neighbourhood)
+    for wolf in wolves:
+        wolf.move()
+        wolf.eatSheep(agents, neighbourhood)   
+    for wolf in wolves:
+        for agent in agents:
+            if distance_between(wolf, agent) <= 2:
+                result.append(agent)
+ 
+agents = set(agents) - set(result)
+
+for i, agent in enumerate(agents):
+    if agent.x >= 1:
+        print(agents[i])
+        agents.remove(agent)
+
+for i, agent in enumerate(agents):
+    if 1 <= 10:
+        print(agents[i])
+        agents.remove(agent)
+        
+result = []
+for wolf in wolves:
+    for agent in agents:
+        #if 1 <= 10:
+        if distance_between(wolf, agent) <= neighbourhood:
+            result.append(agent)
+            a = result
+
+agents = set(agents) - set(a)
+
+
 # print agents x, y and store        
 for i in range(num_of_agents):
     print(f"Agent {i}: x = {agents[i].x}, "
                           f"y = {agents[i].y}, "
                           f"store = {agents[i].store}")
  
+    
+# distance between wolves and agents
+def distance_between(wolf, agent):
+    return (((agent.x - wolf.x)**2) + ((agent.y - wolf.y)**2))**0.5
+    
+for wolf in wolves:
+    for agent in agents:
+        distance = distance_between(wolf, agent) 
+        if distance <= neighbourhood:
+            print('eat')
+            del(agent)
+
+
+
 
 # plot agents on grid
-matplotlib.pyplot.xlim(0, lenx)
-matplotlib.pyplot.ylim(0, leny)
-matplotlib.pyplot.imshow(environment)
+plt.xlim(0, lenx)
+plt.ylim(0, leny)
+plt.imshow(environment)
 for i in range(num_of_agents):
-    matplotlib.pyplot.scatter(agents[i].x, agents[i].y, s=50)
+    plt.scatter(agents[i].x, agents[i].y, s=50)
 for wolf in wolves:
-    matplotlib.pyplot.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
-matplotlib.pyplot.show()
+    plt.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
+plt.show()
 
 
 # distance function
@@ -141,12 +200,6 @@ for i in agents:
 #    listy.append(i.store)
 #    writer.writerow(listy)		# List of values.
 #f3.close()
-
-
-
-
-
-
 
 
 

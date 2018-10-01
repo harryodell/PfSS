@@ -1,6 +1,8 @@
 import random
 import operator
-import matplotlib.pyplot 
+import matplotlib
+matplotlib.use('macosx') 
+import matplotlib.pyplot as plt
 import agentframework
 import matplotlib.animation 
 import matplotlib.colors as colors
@@ -28,7 +30,7 @@ leny = len(environment[1])
 lenx = len(environment)
 carry_on = True
 a = 0 
-fig = matplotlib.pyplot.figure(figsize=(7, 7))
+fig = plt.figure(figsize=(7, 7))
 ax = fig.add_axes([0, 0, 1, 1])
 totalenv = sum(sum(x) for x in environment)
 colours = list(colors._colors_full_map.values())
@@ -62,16 +64,16 @@ def update(blah):
         print("Stopping condition met - Environment depleted by *******")
                
     # plot agents on grid
-    matplotlib.pyplot.xlim(0, lenx)
-    matplotlib.pyplot.ylim(0, leny)
-    matplotlib.pyplot.imshow(environment)
+    plt.xlim(0, lenx)
+    plt.ylim(0, leny)
+    plt.imshow(environment)
     #for i in range(num_of_agents):
-     #   matplotlib.pyplot.scatter(agents[i].x, agents[i].y, s=50)
+     #   plt.scatter(agents[i].x, agents[i].y, s=50)
     for agent in agents:
-        matplotlib.pyplot.scatter(agent.x, agent.y, s=50, c = agent.colours)
+        plt.scatter(agent.x, agent.y, s=50, c = agent.colours)
 
     for wolf in wolves:
-        matplotlib.pyplot.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
+        plt.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
 
 
 
@@ -86,7 +88,7 @@ def gen_function(blah = [0]):
 #animation = matplotlib.animation.FuncAnimation(fig, update, interval=1)
 #animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, repeat=False, frames=num_of_iterations) 
 animation = matplotlib.animation.FuncAnimation(fig, update, interval = 1, frames=gen_function, repeat=False)
-matplotlib.pyplot.show()
+plt.show()
 
 
 

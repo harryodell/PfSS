@@ -112,7 +112,7 @@ class Wolf:
     def eatSheep(self, agents, neighbourhood):
         for wolf in self.wolves:
             for agent in agents:
-                distance = self.distance_between(agent) 
+                distance = self.distance_between(self.agent) 
                 if distance <= neighbourhood:
                     print('eat')
                     #del(agent)
@@ -120,7 +120,7 @@ class Wolf:
         
         
         
-        
+ 
         
            
         
