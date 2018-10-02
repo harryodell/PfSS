@@ -1,7 +1,7 @@
 import random
 import operator
 import matplotlib
-matplotlib.use('macosx') 
+#matplotlib.use('macosx') 
 import matplotlib.pyplot as plt
 import agentframework
 import matplotlib.animation 

@@ -53,6 +53,7 @@ class Agent:
             #i += 1
             if agent != self:
                 distance = self.distance_between(agent) 
+                #if distance <= self.neighbourhood:
                 if distance <= neighbourhood:
                     average = (self.store + agent.store)/2
                     self.store = average

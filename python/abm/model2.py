@@ -71,8 +71,10 @@ wolves = [agentframework.Wolf(environment, wolves, neighbourhood, agents) for n 
 #        agent.share_with_neighbours(neighbourhood)
 
 
-def distance_between(wolf, agent):
-    return (((agent.x - wolf.x)**2) + ((agent.y - wolf.y)**2))**0.5
+
+
+#def distance_between(wolf, agent):
+#    return (((agent.x - wolf.x)**2) + ((agent.y - wolf.y)**2))**0.5
 
 for j in range(num_of_iterations):
     random.shuffle(agents)
@@ -164,8 +166,9 @@ plt.show()
 
 # distance function
 #def distance_between(agents_row_a, agents_row_b):
-#    return (((agents_row_a.x - agents_row_b.x)**2) + 
-#    ((agents_row_a.y - agents_row_b.y)**2))**0.5
+#    return (((agents_row_a.x - agents_row_b.x)**2) + ((agents_row_a.y - agents_row_b.y)**2))**0.5
+
+
 
 #distance = []
 
@@ -173,10 +176,12 @@ plt.show()
 #    disty = distance_bet(i, j)
 #    distance.append(distance)
 
+
 #for i in range(len(agents)):
 #    for j in range(i + 1, len(agents)):
 #        disty = distance_between(agents[i], agents[j])
 #        distance.append(disty)
+        
 
 #end = time.clock()
 #print("time = " + str(end - start))
@@ -200,7 +205,6 @@ for i in agents:
 #    listy.append(i.store)
 #    writer.writerow(listy)		# List of values.
 #f3.close()
-
 
 
 
