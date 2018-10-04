@@ -1,11 +1,7 @@
 import random
 import operator
 import matplotlib.pyplot as plt 
-import itertools
-import time
 import agentframework
-import csv 
-import pandas as pd
 import matplotlib.colors as colors
 
 
@@ -49,7 +45,11 @@ for i in range(num_of_agents):
     agents.append(agentframework.Agent(environment, agents,
                                        neighbourhood, colours))
     
-wolves = [agentframework.Wolf(environment, wolves, neighbourhood, agents) for n in range(num_of_wolves)]
+for i in range(num_of_wolves):
+    wolves.append(agentframework.Wolf(environment, wolves,
+                                       neighbourhood, agents))
+    
+# wolves = [agentframework.Wolf(environment, wolves, neighbourhood, agents) for n in range(num_of_wolves)]
  
 # make the agents using list comp
 #agents = [agentframework.Agent(environment, agents, neighbourhood) for n in range(num_of_agents)]

@@ -120,6 +120,7 @@ class Wolf:
         self.x = random.randint(0, len(self.environment))
         self.neighbourhood = neighbourhood
         self.colours = 'black'
+        self.agents = agents
         
         
     def move(self):
@@ -136,10 +137,10 @@ class Wolf:
     def distance_between(self, other):
         return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)    
     
-    def eatSheep(self, agents, neighbourhood):
+    def eatSheep(self, neighbourhood):
         for wolf in self.wolves:
-            for agent in agents:
-                distance = self.distance_between(self.agent) 
+            for agent in self.agents:
+                distance = self.distance_between(agent) 
                 if distance <= neighbourhood:
                     print('eat')
                     #del(agent)

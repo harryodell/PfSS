@@ -21,7 +21,7 @@ with open('in.txt', 'r') as file_for_reading:
 
 # initialie variables
 num_of_agents = 5
-num_of_wolves = 100
+num_of_wolves = 10
 num_of_iterations = 100
 neighbourhood = 20
 agents = []
@@ -37,8 +37,14 @@ colours = list(colors._colors_full_map.values())
 
 
 # make the agents using list comp
-agents = [agentframework.Agent(environment, agents, neighbourhood, colours) for n in range(num_of_agents)]
-wolves = [agentframework.Wolf(environment, wolves, neighbourhood, agents) for n in range(num_of_wolves)]
+# make the agents
+for i in range(num_of_agents):
+    agents.append(agentframework.Agent(environment, agents,
+                                       neighbourhood, colours))
+    
+for i in range(num_of_wolves):
+    wolves.append(agentframework.Wolf(environment, wolves,
+                                       neighbourhood, agents))
 
 
 def update(blah):
@@ -57,7 +63,7 @@ def update(blah):
     for i in range(num_of_iterations):
         for wolf in wolves:
             wolf.move()
-            wolf.eatSheep(agents, neighbourhood)
+            wolf.eatSheep(neighbourhood)
             
     if sum(sum(x) for x in environment) < totalenv*0.8:
         carry_on = False
