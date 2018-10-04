@@ -9,7 +9,6 @@ class Agent:
     
     Attributes:
         environment: A list of lists defining a theoretical environment
-        agents: A list of all agents in the environment
         x/y: Coordinates defining agents location within the environment
         store: A store of an agents resources having 'eaten' the environment
         colours: A colour to be plotted for an agent
@@ -38,7 +37,7 @@ class Agent:
         return str(self.y) + ',' + str(self.x) + ',' + str(self.store) + ',' + str(self.colours)
         
     
-    # Function to move the agent
+    # Function to move the agent at random
     def move(self):
         if random.random() < 0.5:
             self.x = (self.x + 1) % len(self.environment)
@@ -85,9 +84,6 @@ class Agent:
                     agent.store = average
                     print(f"Agent ({self}) sharing with Agent ({agent}): dist = {str(distance)}, ave = {str(average)}")
                     print("\n")
-
-    def die(self):
-        raise NotImplementedError
         
     @property
     def x(self):
@@ -110,7 +106,21 @@ class Agent:
         
         
 # Create wolf class      
-class Wolf:
+class Wolf:    
+    """
+    A single wolf in a pre-defined environment.
+    
+    Attributes:
+        environment: A list of lists defining a theoretical environment
+        x/y: Coordinates defining wolfs location within the environment
+        neighbourhood: The euclidean distance in which agents will share its store
+        
+    Behaviours:
+        move: Move randomly around the environment
+        eatSheep: Removes sheep from environment 
+    """
+    
+    # Constructor methods
     def __init__(self, environment, neighbourhood):
         self.environment = environment    
         self.y = random.randint(0, len(self.environment[1]))        
@@ -118,7 +128,7 @@ class Wolf:
         self.neighbourhood = neighbourhood
         self.colours = 'black'
         
-        
+    # Function to move the wolf at random
     def move(self):
         if random.random() < 0.5:
             self.x = (self.x + 1) % len(self.environment)
@@ -130,15 +140,16 @@ class Wolf:
         else:
             self.y = (self.y - 1) % len(self.environment[1])            
 
+    # Calculates the euclidean distance between wolf and agent
     def distance_between(self, other):
         return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)    
-    
+ 
+    # Function to remove agent from the environment if distance < neighbourhood
     def eatSheep(self, neighbourhood, wolves, agents):
         for wolf in wolves:
             for agent in agents:
                 distance = self.distance_between(agent) 
                 if distance <= neighbourhood:
-                    print('eat')
                     agents.remove(agent)
                     
                     

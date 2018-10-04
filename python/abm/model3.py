@@ -18,8 +18,8 @@ with open('in.txt', 'r') as file_for_reading:
         environment.append(rowlisty)
 
 # initialie variables
-num_of_agents = 5
-num_of_wolves = 10
+num_of_agents = 100
+num_of_wolves = 5
 num_of_iterations = 100
 neighbourhood = 20
 agents = []
