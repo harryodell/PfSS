@@ -8,15 +8,13 @@ import matplotlib.animation
 import matplotlib.colors as colors
 # %matplotlib qt
 
+
 # read in data 
 environment = []
 with open('in.txt', 'r') as file_for_reading:
     for row in file_for_reading:
         rowlist = row.split(',')
         rowlisty = list(map(int, rowlist))
-#        rowlist = []	
-#        for value in row:
-#            rowlist.append(value)
         environment.append(rowlisty)
 
 # initialie variables
@@ -72,8 +70,6 @@ def update(blah):
     plt.xlim(0, lenx)
     plt.ylim(0, leny)
     plt.imshow(environment)
-    #for i in range(num_of_agents):
-     #   plt.scatter(agents[i].x, agents[i].y, s=50)
     for agent in agents:
         plt.scatter(agent.x, agent.y, s=50, c = agent.colours)
 
@@ -89,9 +85,7 @@ def gen_function(blah = [0]):
         yield a			# Returns control and waits next call.
         a += 1
 
-
-#animation = matplotlib.animation.FuncAnimation(fig, update, interval=1)
-#animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, repeat=False, frames=num_of_iterations) 
+ 
 animation = matplotlib.animation.FuncAnimation(fig, update, interval = 1, frames=gen_function, repeat=False)
 plt.show()
 

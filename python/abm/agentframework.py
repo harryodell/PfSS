@@ -25,7 +25,6 @@ class Agent:
     
     # Constuctor methods
     def __init__(self, environment, neighbourhood, colours):
-        #self.agents = agents
         self.environment = environment        
         self.y = random.randint(0, len(self.environment[1]))        
         self.x = random.randint(0, len(self.environment))
@@ -81,7 +80,6 @@ class Agent:
             if agent != agent:
                 distance = self.distance_between(agent) 
                 if distance <= self.neighbourhood:
-                #if self.distance_between(agent) <= self.neighbourhood:           
                     average = (self.store + agent.store)/2
                     self.store = average
                     agent.store = average
@@ -114,13 +112,11 @@ class Agent:
 # Create wolf class      
 class Wolf:
     def __init__(self, environment, neighbourhood):
-        #self.wolves = wolves
         self.environment = environment    
         self.y = random.randint(0, len(self.environment[1]))        
         self.x = random.randint(0, len(self.environment))
         self.neighbourhood = neighbourhood
         self.colours = 'black'
-        #self.agents = agents
         
         
     def move(self):
@@ -146,10 +142,7 @@ class Wolf:
                     agents.remove(agent)
                     
                     
-        
-
-#wolves = []
-#wolves = [Wolf(environment, wolves, neighbourhood) for n in range(num_of_wolves)]
+    
         
         
         
