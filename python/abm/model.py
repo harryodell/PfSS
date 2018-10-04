@@ -1,98 +1,62 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
-
 import random
-import math
+import matplotlib.pyplot as plt 
+import agentframework
+import matplotlib.colors as colors
 
 
-
-### first agent
-y0 = random.randint(0,100)
-x0 = random.randint(0,100)
-
-# random walk
-if random.random() < 0.5:
-    y0 += 1
-else:
-    y0 -= 1
-    
-if random.random() < 0.5:
-    x0 += 1
-else:
-    x0 -= 1
-
-# second random walk
-if random.random() < 0.5:
-    y0 += 1
-else:
-    y0 -= 1
-    
-if random.random() < 0.5:
-    x0 += 1
-else:
-    x0 -= 1
+# read in data 
+environment = []
+with open('in.txt', 'r') as file_for_reading:
+    for row in file_for_reading:
+        rowlist = row.split(',')
+        rowlisty = list(map(int, rowlist))
+        environment.append(rowlisty)
 
 
+# initialize 
+num_of_agents = 10
+num_of_iterations = 100
+neighbourhood = 20
+agents = []
+leny = len(environment[1])
+lenx = len(environment)
+colours = list(colors._colors_full_map.values())
+wolves = []
+num_of_wolves = 100
 
 
+# make the agents using list comp
+agents = [agentframework.Agent(environment, agents, neighbourhood, colours) for n in range(num_of_agents)]
 
-### second agent
-y1 = random.randint(0,100)
-x1 = random.randint(0,100)
-# random walk
-if random.random() < 0.5:
-    y1 += 1
-else:
-    y1 -= 1
-    
-if random.random() < 0.5:
-    x1 += 1
-else:
-    x1 -= 1
-
-# second random walk
-if random.random() < 0.5:
-    y1 += 1
-else:
-    y1 -= 1
-    
-if random.random() < 0.5:
-    x1 += 1
-else:
-    x1 -= 1
+# make the wolves using list comp
+wolves = [agentframework.Wolf(environment, wolves, neighbourhood, agents) for n in range(num_of_wolves)]
 
 
-print(y0, x0)
-print(y1, x1)
+# agent interactions
+for j in range(num_of_iterations):
+    random.shuffle(agents)
+    for agent in agents:
+        agent.move()
+        agent.eat()
+        # agent.sick()
+        agent.share_with_neighbours(neighbourhood)
+
+# wolf interactions
+for i in range(num_of_iterations):
+    for wolf in wolves:
+        wolf.move()
+        wolf.eatSheep(agents, neighbourhood)
 
 
-
-
-#### find distance
-
-distance = math.sqrt( (y1-y0)**2 + (x1-x0)**2 )
-print(distance)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# plot agents on grid
+plt.xlim(0, lenx)
+plt.ylim(0, leny)
+plt.imshow(environment)
+for i in range(num_of_agents):
+    plt.scatter(agents[i].x, agents[i].y, s=50)
+for wolf in wolves:
+    plt.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
+plt.show()
 
 
 
