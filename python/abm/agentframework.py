@@ -24,8 +24,8 @@ class Agent:
     """
     
     # Constuctor methods
-    def __init__(self, environment, agents, neighbourhood, colours):
-        self.agents = agents
+    def __init__(self, environment, neighbourhood, colours):
+        #self.agents = agents
         self.environment = environment        
         self.y = random.randint(0, len(self.environment[1]))        
         self.x = random.randint(0, len(self.environment))
@@ -76,9 +76,9 @@ class Agent:
 
     
     # Function to share store
-    def share_with_neighbours(self, neighbourhood):
-        for agent in self.agents:
-            if agent != self:
+    def share_with_neighbours(self, neighbourhood, agents):
+        for agent in agents:
+            if agent != agent:
                 distance = self.distance_between(agent) 
                 if distance <= self.neighbourhood:
                 #if self.distance_between(agent) <= self.neighbourhood:           
@@ -113,14 +113,14 @@ class Agent:
         
 # Create wolf class      
 class Wolf:
-    def __init__(self, environment, wolves, neighbourhood, agents):
-        self.wolves = wolves
+    def __init__(self, environment, neighbourhood):
+        #self.wolves = wolves
         self.environment = environment    
         self.y = random.randint(0, len(self.environment[1]))        
         self.x = random.randint(0, len(self.environment))
         self.neighbourhood = neighbourhood
         self.colours = 'black'
-        self.agents = agents
+        #self.agents = agents
         
         
     def move(self):
@@ -137,13 +137,14 @@ class Wolf:
     def distance_between(self, other):
         return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)    
     
-    def eatSheep(self, neighbourhood):
-        for wolf in self.wolves:
-            for agent in self.agents:
+    def eatSheep(self, neighbourhood, wolves, agents):
+        for wolf in wolves:
+            for agent in agents:
                 distance = self.distance_between(agent) 
                 if distance <= neighbourhood:
                     print('eat')
-                    #del(agent)
+                    agents.remove(agent)
+                    
                     
         
 

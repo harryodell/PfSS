@@ -36,15 +36,14 @@ totalenv = sum(sum(x) for x in environment)
 colours = list(colors._colors_full_map.values())
 
 
-# make the agents using list comp
 # make the agents
 for i in range(num_of_agents):
-    agents.append(agentframework.Agent(environment, agents,
+    agents.append(agentframework.Agent(environment,
                                        neighbourhood, colours))
     
 for i in range(num_of_wolves):
-    wolves.append(agentframework.Wolf(environment, wolves,
-                                       neighbourhood, agents))
+    wolves.append(agentframework.Wolf(environment,
+                                       neighbourhood))
 
 
 def update(blah):
@@ -58,12 +57,12 @@ def update(blah):
             agent.move()
             agent.eat()
             # agent.sick()
-            agent.share_with_neighbours(neighbourhood)
+            agent.share_with_neighbours(neighbourhood, agents)
     
     for i in range(num_of_iterations):
         for wolf in wolves:
             wolf.move()
-            wolf.eatSheep(neighbourhood)
+            wolf.eatSheep(neighbourhood, wolves, agents)
             
     if sum(sum(x) for x in environment) < totalenv*0.8:
         carry_on = False
