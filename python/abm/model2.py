@@ -3,7 +3,7 @@ import operator
 import matplotlib.pyplot as plt 
 import agentframework
 import matplotlib.colors as colors
-
+import pandas as pd
 
 #start = time.clock()
  
@@ -21,7 +21,7 @@ with open('in.txt', 'r') as file_for_reading:
 #lenx = len(environment)
 #leny = len(environment[1])
 
-# data = pd.read_csv('in.txt', header = None)
+data = pd.read_csv('in.txt', header = None)
 
 
 # plot data

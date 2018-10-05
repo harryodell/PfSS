@@ -52,10 +52,10 @@ class Agent:
 
     # Function to eat
     def eat(self):
-        # if environment value is more than 10, eat 10..
-        if self.environment[self.y][self.x] > 10:
-            self.environment[self.y][self.x] -= 10
-            self.store += 10
+        # if environment value is more than 20, eat 20.
+        if self.environment[self.y][self.x] > 20:
+            self.environment[self.y][self.x] -= 20
+            self.store += 20
         else: # else eat remaining value 
             self.store += self.environment[self.y][self.x]
             self.environment[self.y][self.x] = 0    
@@ -131,14 +131,14 @@ class Wolf:
     # Function to move the wolf at random
     def move(self):
         if random.random() < 0.5:
-            self.x = (self.x + 1) % len(self.environment)
+            self.x = (self.x + 10) % len(self.environment)
         else:
-            self.x = (self.x - 1) % len(self.environment)
+            self.x = (self.x - 10) % len(self.environment)
 
         if random.random() < 0.5:
-            self.y = (self.y + 1) % len(self.environment[1])
+            self.y = (self.y + 10) % len(self.environment[1])
         else:
-            self.y = (self.y - 1) % len(self.environment[1])            
+            self.y = (self.y - 10) % len(self.environment[1])            
 
     # Calculates the euclidean distance between wolf and agent
     def distance_between(self, other):

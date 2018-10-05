@@ -17,10 +17,11 @@ with open('in.txt', 'r') as file_for_reading:
         rowlisty = list(map(int, rowlist))
         environment.append(rowlisty)
 
+
 # initialie variables
 num_of_agents = 100
 num_of_wolves = 5
-num_of_iterations = 100
+num_of_iterations = 1000
 neighbourhood = 20
 agents = []
 wolves = []
@@ -48,8 +49,8 @@ def update(blah):
     
     fig.clear()  
     global carry_on
-
-    for j in range(num_of_iterations):
+    
+    for j in range(10):
         random.shuffle(agents)
         for agent in agents:
             agent.move()
@@ -57,21 +58,26 @@ def update(blah):
             # agent.sick()
             agent.share_with_neighbours(neighbourhood, agents)
     
-    for i in range(num_of_iterations):
-        for wolf in wolves:
-            wolf.move()
-            wolf.eatSheep(neighbourhood, wolves, agents)
+    #for i in range(num_of_iterations):
+    for wolf in wolves:
+        wolf.move()
+        wolf.eatSheep(neighbourhood, wolves, agents)
             
     if sum(sum(x) for x in environment) < totalenv*0.8:
         carry_on = False
         print("Stopping condition met - Environment depleted by *******")
-               
+        
+    if len(agents) == 0:
+        carry_on = False
+        print("Stopping condition met - no sheep left!")
+    
+    
     # plot agents on grid
     plt.xlim(0, lenx)
     plt.ylim(0, leny)
     plt.imshow(environment)
     for agent in agents:
-        plt.scatter(agent.x, agent.y, s=50, c = agent.colours)
+        plt.scatter(agent.x, agent.y, s=50, c = 'white') #c = agent.colours)
 
     for wolf in wolves:
         plt.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
