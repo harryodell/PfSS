@@ -7,8 +7,9 @@ import agentframework
 import matplotlib.animation 
 import matplotlib.colors as colors
 import sys
-import functions
 import csv
+
+import functions
 
 
 # If the correct number of arguments are passed
@@ -64,7 +65,6 @@ while True:
             break
 
 
-
 # read in data as a list of lists
 environment = []
 with open('in.txt', 'r') as file_for_reading:
@@ -79,8 +79,8 @@ agents = []                     # list of agents
 wolves = []                     # list of wolves
 leny = len(environment[1])      # length of y-axis as determined from the environment
 lenx = len(environment)         # length of x-axis as determined from the environment
-carry_on = True                 # carry on variable for stopping function             
-fig = plt.figure(figsize=(7, 7))    # define fig size
+carry_on = True                 # boolean for stopping functions            
+fig = plt.figure(figsize=(7, 7))    
 ax = fig.add_axes([0, 0, 1, 1])
 env_total = sum(sum(x) for x in environment)      # sum of all values in environment
 colours = list(colors._colors_full_map.values()) # list of colours to assign to agents
@@ -107,7 +107,7 @@ def update(misc):
         Stopping conditions will be assessed
         Environment, wolves and agents will be plotted
     """
-    # clear figure each time function runs
+
     fig.clear()  
     global carry_on
     global counter 
@@ -115,7 +115,6 @@ def update(misc):
     # make agents interact 10 times for each function call 
     # this gives agents a chance to move and eat a sufficient amount
     for _interactions in range(10):
-        # shuffle order in which agents interact
         random.shuffle(agents)
         for agent in agents:
             agent.move()
@@ -128,17 +127,15 @@ def update(misc):
         wolf.move()
         wolf.eat_sheep(neighbourhood, wolves, agents)
             
-    # stopping condition: if overall environment is depleted by %50
+    ### stopping conditions
     if sum(sum(x) for x in environment) < env_total*0.5:
         carry_on = False
         print("Stopping condition met - Environment depleted by %50")
 
-    # stopping condition: if all the sheep have been eaten    
     if len(agents) == 0:
         carry_on = False
         print("Stopping condition met - no sheep left!")
     
-    # stopping condition: if iterations exceeded, stop and print to console
     if counter == (num_of_iterations):
         carry_on = False
         print("Stopping condition met - number of iterations reached")
@@ -152,10 +149,8 @@ def update(misc):
     plt.ylabel('Y')
     plt.xlabel('X')
     for agent in agents:
-        # plot agents as white dots
         plt.scatter(agent.x, agent.y, s=50, c = 'white') #c = agent.colours)
     for wolf in wolves:
-        # plot wolves as black stars
         plt.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
 
 
@@ -179,7 +174,7 @@ else:
 
 # write environment to file
 f2 = open('env.txt', 'w', newline='') 
-writer = csv.writer(f2, delimiter=' ')
+writer = csv.writer(f2, delimiter=',')
 for row in environment:		
 	writer.writerow(row)
 f2.close()
@@ -187,7 +182,7 @@ f2.close()
 
 # write wolves stores to file
 f3 = open('stored.txt', 'w', newline='') 
-writer = csv.writer(f3, delimiter=' ')
+writer = csv.writer(f3, delimiter=',')
 for wolf in wolves:
     listy = []
     listy.append(wolf.store) 
