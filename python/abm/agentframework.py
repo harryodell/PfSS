@@ -113,7 +113,8 @@ class Wolf:
     Attributes:
         environment: A list of lists defining a theoretical environment
         x/y: Coordinates defining wolfs location within the environment
-        neighbourhood: The euclidean distance in which agents will share its store
+        neighbourhood: The euclidean distance in which a wolf can eat an agent
+        store: store of values attained from eating/taking agents store
         
     Behaviours:
         move: Move randomly around the environment
@@ -127,12 +128,19 @@ class Wolf:
         self.x = random.randint(0, len(self.environment))
         self.neighbourhood = neighbourhood
         self.colours = 'black'
+        self.store = 0
         # if 1 have general upwards trajectory
         if random.randint(0,1) == 1:
             self.direc = 'up'
         else:
             # else have general downwards trajectory
             self.direc = 'east'
+
+
+    # Wolf string - returns wolfs coordinates and direction
+    def __str__(self):        
+        return str(self.y) + ',' + str(self.x) + ',' + str(self.direc)
+
 
     # Function to move the wolf pseudo-randomly in general upwards or easterly trajectories
     def move(self):
@@ -166,17 +174,14 @@ class Wolf:
  
     # Function to remove agent from the environment 
     def eat_sheep(self, neighbourhood, wolves, agents):
-        for wolf in wolves:
+        for _wolf in wolves:
             for agent in agents:
                 distance = self.distance_between(agent) 
                 if distance <= neighbourhood:
+                    self.store += agent.store
                     agents.remove(agent)
-                    
-        
-        
-        
-        
-        
+                
+    
         
         
         
