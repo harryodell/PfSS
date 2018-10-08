@@ -5,17 +5,17 @@ import math
 class Agent:
     
     """
-    A single agent in a pre-defined environment.
+    Defines a single agent in an environment.
     
     Attributes:
         environment: A list of lists defining a theoretical environment
         x/y: Coordinates defining agents location within the environment
         store: A store of an agents resources having 'eaten' the environment
-        colours: A colour to be plotted for an agent
+        colours: A colour to be plotted for an agent 
         neighbourhood: The euclidean distance in which agents will share its store
         
     Behaviours:
-        move: Move randomly around the environment
+        move: Move pseudo-randomly around the environment
         eat: Depletes the environment store at its location
         sick: Dumps its store in the environment having eaten too much
         share_with_neighboursbours: Agent shares its store evenly with neighbour
@@ -37,7 +37,7 @@ class Agent:
         return str(self.y) + ',' + str(self.x) + ',' + str(self.store) + ',' + str(self.colours)
         
     
-    # Function to move the agent at random
+    # Function to move the agent at random - a single step at a time
     def move(self):
         if random.random() < 0.5:
             self.x = (self.x + 1) % len(self.environment)
@@ -50,7 +50,7 @@ class Agent:
             self.y = (self.y - 1) % len(self.environment[1])        
 
 
-    # Function to eat
+    # Function to eat - depletes the value of the environment at that location
     def eat(self):
         # if environment value is more than 20, eat 20.
         if self.environment[self.y][self.x] > 20:
@@ -61,7 +61,7 @@ class Agent:
             self.environment[self.y][self.x] = 0    
             
             
-    # Function to be sick        
+    # Function to be sick - agent offloads store to environment location
     def sick(self):
         if self.store > 100:
             self.environment[self.y][self.x] += self.store
@@ -76,14 +76,14 @@ class Agent:
     # Function to share store
     def share_with_neighbours(self, neighbourhood, agents):
         for agent in agents:
+            # if agent not equal to itself
             if agent != agent:
-                distance = self.distance_between(agent) 
-                if distance <= self.neighbourhood:
+                if self.distance_between(agent) <= self.neighbourhood:
                     average = (self.store + agent.store)/2
                     self.store = average
                     agent.store = average
-                    print(f"Agent ({self}) sharing with Agent ({agent}): dist = {str(distance)}, ave = {str(average)}")
-                    print("\n")
+                    #print(f"Agent ({self}) sharing with Agent ({agent}): dist = {str(distance)}, ave = {str(average)}")
+                    #print("\n")
         
     @property
     def x(self):
@@ -117,7 +117,7 @@ class Wolf:
         
     Behaviours:
         move: Move randomly around the environment
-        eatSheep: Removes sheep from environment 
+        eat_sheep: Removes sheep from environment 
     """
     
     # Constructor methods
@@ -127,33 +127,51 @@ class Wolf:
         self.x = random.randint(0, len(self.environment))
         self.neighbourhood = neighbourhood
         self.colours = 'black'
-        
-    # Function to move the wolf at random
-    def move(self):
-        if random.random() < 0.5:
-            self.x = (self.x + 10) % len(self.environment)
+        # if 1 have general upwards trajectory
+        if random.randint(0,1) == 1:
+            self.direc = 'up'
         else:
-            self.x = (self.x - 10) % len(self.environment)
+            # else have general downwards trajectory
+            self.direc = 'east'
 
-        if random.random() < 0.5:
-            self.y = (self.y + 10) % len(self.environment[1])
+    # Function to move the wolf pseudo-randomly in general upwards or easterly trajectories
+    def move(self):
+        # wolves move up to 10 places per iteration to increase distance covered
+        if self.direc == 'up':
+            if random.random() < 0.5:
+                self.x = (self.x + 10) % len(self.environment)
+            else:
+                self.x = (self.x - 10) % len(self.environment)
+
+            if random.random() < 0.5:
+                self.y = (self.y + 10) % len(self.environment[1])
+            else:
+                self.y = (self.y - 0) % len(self.environment[1])
         else:
-            self.y = (self.y - 10) % len(self.environment[1])            
+            if random.random() < 0.5:
+                self.x = (self.x + 10) % len(self.environment)
+            else:
+                self.x = (self.x - 0) % len(self.environment)
+
+            if random.random() < 0.5:
+                self.y = (self.y + 10) % len(self.environment[1])
+            else:
+                self.y = (self.y - 10) % len(self.environment[1])
+
 
     # Calculates the euclidean distance between wolf and agent
     def distance_between(self, other):
         return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)    
+
  
-    # Function to remove agent from the environment if distance < neighbourhood
-    def eatSheep(self, neighbourhood, wolves, agents):
+    # Function to remove agent from the environment 
+    def eat_sheep(self, neighbourhood, wolves, agents):
         for wolf in wolves:
             for agent in agents:
                 distance = self.distance_between(agent) 
                 if distance <= neighbourhood:
                     agents.remove(agent)
                     
-                    
-    
         
         
         
