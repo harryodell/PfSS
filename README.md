@@ -8,7 +8,7 @@ The simulation runs until one of three stopping conditions are met:
 * The sheep have depleted the overall value of the environment by 50%
 * All the sheep have been eaten
 
-Solarized dark             |  Solarized Ocean
+Environment at 1 iteration |  Environment after 1000 iterations
 :-------------------------:|:-------------------------:
 ![](python/figs/env_1_iteration.png "Environment at initialization")  |  ![](python/figs/env_final.png "Environment after 1000 iterations")
 
