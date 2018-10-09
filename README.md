@@ -8,10 +8,6 @@ The simulation runs until one of three stopping conditions are met:
 * The sheep have depleted the overall value of the environment by 50%
 * All the sheep have been eaten
 
-Environment at 1 iteration |  Environment after 1000 iterations
-:-------------------------:|:-------------------------:
-![](python/figs/env_1_iteration.png "Environment at initialization")  |  ![](python/figs/env_final.png "Environment after 1000 iterations")
-
 ## Motivation
 
 The motivation behind this project was to fulfil the requirements for assessment 1 of the [GEOG5995 Programming for Social Scientists: Core Skills [Python] course](http://www.geog.leeds.ac.uk/courses/computing/study/core-python-phd/ "GEOG5995") at Leeds University. This is a one-week intensive course aimed at social scientists that want to learn how to program in Python. The course teaches basic Python along with useful elements and conventions within the core programming culture. 
@@ -45,6 +41,13 @@ The arguments should be passed as integers, however, failing this the user will 
 ### Visualization prompt
 
 Following the initialization of the model, the user will be asked to input whether they would like to see the visualization of the animation. We use ```matplotlib.animation.FuncAnimation()``` to make the animation - this function provides a plot of the current state of the model following each iteration and is recommended because of its use in helping the user understand the interactions within the model.
+
+An example of the how the visualization should appear is given:
+
+Environment at 1st iteration|  Environment after 1000 iterations
+:--------------------------:|:--------------------------:
+![](python/figs/env_1_iteration.png "Environment at initialization")  |  ![](python/figs/env_final.png "Environment after 1000 iterations")
+
 
 ### Model outputs
 
