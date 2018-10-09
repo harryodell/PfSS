@@ -50,7 +50,7 @@ When the model stops running, it can be assumed that a stopping criterion has be
 Two files will then be written out to the same directory in which the code is in:
 
 * ```out.txt```: a text file providing a copy of the state of the environment at the end of the simulation
-* ```stored.txt``` a text file listing the stores of the wolves having consumed sheep and acquired their stores
+* ```stored.txt```: a text file listing the stores of the **wolves** having consumed sheep and acquired their stores
 
 ## License
 
