@@ -44,7 +44,7 @@ Following the initialization of the model, the user will be asked to input wheth
 
 An example of the how the visualization should appear is given:
 
-Environment at 1st iteration|  Environment after 1000 iterations
+Environment at 1st iteration|  Environment after all sheep were eaten
 :--------------------------:|:--------------------------:
 ![](python/figs/env_1_iteration.png "Environment at initialization")  |  ![](python/figs/env_final.png "Environment after 1000 iterations")
 
