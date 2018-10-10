@@ -11,7 +11,6 @@ class Agent:
         environment: A list of lists defining a theoretical environment
         x/y: Coordinates defining agents location within the environment
         store: A store of an agents resources having 'eaten' the environment
-        colours: A colour to be plotted for an agent 
         neighbourhood: The euclidean distance in which agents will share its store
         
     Behaviours:
@@ -23,18 +22,17 @@ class Agent:
     """
     
     # Constuctor methods
-    def __init__(self, environment, neighbourhood, colours):
+    def __init__(self, environment, neighbourhood):
         self.environment = environment        
         self.y = random.randint(0, len(self.environment[1]))        
         self.x = random.randint(0, len(self.environment))
         self.store = 0 
         self.neighbourhood = neighbourhood
-        self.colours = random.choice(colours)
 
 
-    # Agent string - returns agents coordinates, store and colour
+    # Agent string - returns agents coordinates and store 
     def __str__(self):        
-        return str(self.y) + ',' + str(self.x) + ',' + str(self.store) + ',' + str(self.colours)
+        return str(self.y) + ',' + str(self.x) + ',' + str(self.store) + ',' 
         
 
     def move(self):
@@ -70,16 +68,24 @@ class Agent:
     def distance_between(self, other):
         return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
 
-
+    
     def share_with_neighbours(self, neighbourhood, agents):
         for agent in agents:
             # if agent not equal to itself
-            if agent != agent:
-                if self.distance_between(agent) <= self.neighbourhood:
+            if self != agent:
+                if self.distance_between(agent) <= neighbourhood:
                     average = (self.store + agent.store)/2
                     self.store = average
                     agent.store = average
-        
+                    
+                    
+    def have_infant(self, neighbourhood, agents, infants):
+        for agent in agents:
+            # if agent not equal to itself
+            if self != agent:
+                if self.distance_between(agent) <= 2:
+                    infants.append(Infant(self.environment, neighbourhood))
+                    
     @property
     def x(self):
         return self._x
@@ -99,9 +105,22 @@ class Agent:
         
         
         
-        
+class Infant(Agent):
+    def __init__(self, environment, neighbourhood):
+        super().__init__(environment, neighbourhood)
+    
+    #def __init__(self, environment, neighbourhood):
+     #   Agent.__init__(self, environment, neighbourhood)
+
+
+    # to have plot of agents over time
+    # have counter of agents
+    # have counter of iterations
+    
+
+
 # Create wolf class      
-class Wolf:    
+class Wolf:
     """
     A single wolf in a pre-defined environment.
     
@@ -123,7 +142,6 @@ class Wolf:
         self.y = random.randint(0, len(self.environment[1]))        
         self.x = random.randint(0, len(self.environment))
         self.neighbourhood = neighbourhood
-        self.colours = 'black'
         self.store = 0
         if random.randint(0,1) == 1:
             self.direc = 'up' 
@@ -165,7 +183,7 @@ class Wolf:
         return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)    
 
  
-    def eat_sheep(self, neighbourhood, wolves, agents):
+    def eat_agents(self, neighbourhood, wolves, agents):
         for _wolf in wolves:
             for agent in agents:
                 distance = self.distance_between(agent) 
@@ -174,7 +192,15 @@ class Wolf:
                     self.store += agent.store
                     agents.remove(agent)
                 
-    
+
+    def eat_infants(self, neighbourhood, wolves, infants):
+        for _wolf in wolves:
+            for infant in infants:
+                distance = self.distance_between(infant) 
+                if distance <= neighbourhood:
+                    # wolf aquires infants store and removes infant
+                    self.store += infant.store
+                    infants.remove(infant)
         
         
         

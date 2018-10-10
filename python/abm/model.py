@@ -5,7 +5,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import agentframework
 import matplotlib.animation 
-import matplotlib.colors as colors
 import sys
 import csv
 
@@ -74,23 +73,24 @@ with open('in.txt', 'r') as file_for_reading:
         environment.append(rowlisty)
 
 
-# initialie variables
+# initialize variables
 agents = []                     # list of agents
 wolves = []                     # list of wolves
+infants = []                    # list of infants
 leny = len(environment[1])      # length of y-axis as determined from the environment
 lenx = len(environment)         # length of x-axis as determined from the environment
 carry_on = True                 # boolean for stopping functions            
 fig = plt.figure(figsize=(7, 7))    
 ax = fig.add_axes([0, 0, 1, 1])
 env_total = sum(sum(x) for x in environment)      # sum of all values in environment
-colours = list(colors._colors_full_map.values()) # list of colours to assign to agents
 counter = 0  # counter for num_of_iterations
-
+agents_pop = []
+infants_pop = []
 
 # make the agents
 for i in range(num_of_agents):
     agents.append(agentframework.Agent(environment,
-                                       neighbourhood, colours))
+                                       neighbourhood))
 
 # make the wolves
 for i in range(num_of_wolves):
@@ -111,6 +111,8 @@ def update(misc):
     fig.clear()  
     global carry_on
     global counter 
+    global agents_pop
+    global infants_pop
     
     # make agents interact 10 times for each function call 
     # this gives agents a chance to move and eat a sufficient amount
@@ -121,12 +123,22 @@ def update(misc):
             agent.eat()
             # agent.sick()
             agent.share_with_neighbours(neighbourhood, agents)
+            agent.have_infant(neighbourhood, agents, infants)
     
+    # infant interactions
+    for infant in infants:
+        infant.move()
+        infant.eat()
+        
+    agents_pop.append(len(agents))        
+    infants_pop.append(len(infants))
+            
     # move wolves and make them eat!
     for wolf in wolves:
         wolf.move()
-        wolf.eat_sheep(neighbourhood, wolves, agents)
-            
+        wolf.eat_agents(neighbourhood, wolves, agents)
+        wolf.eat_infants(neighbourhood, wolves, infants)
+
     ### stopping conditions
     if sum(sum(x) for x in environment) < env_total*0.5:
         carry_on = False
@@ -142,16 +154,18 @@ def update(misc):
     else:
         counter += 1
 
-    # overlay agents and wolves on plot of environment
+    # overlay agents, wolves and infants on plot of environment
     plt.xlim(0, lenx)
     plt.ylim(0, leny)
     plt.imshow(environment)
     plt.ylabel('Y')
     plt.xlabel('X')
     for agent in agents:
-        plt.scatter(agent.x, agent.y, s=50, c = 'white') #c = agent.colours)
+        plt.scatter(agent.x, agent.y, s=50, c = 'white') 
     for wolf in wolves:
-        plt.scatter(wolf.x, wolf.y, s=50, c = wolf.colours, marker = '*')
+        plt.scatter(wolf.x, wolf.y, s=50, c = 'black', marker = '*')
+    for infant in infants:
+        plt.scatter(infant.x, infant.y, s=50, c = 'red') 
 
 
 # generator function to supply data to update function and each frame of animation
@@ -164,14 +178,13 @@ def gen_function(misc = []):
 # animation 
 animation = matplotlib.animation.FuncAnimation(fig, update, interval = 100, frames=gen_function, repeat=False)
 
-
 # plot animation if instructed by user
 if plot == 'Y' or plot == 'y' or plot == 'yes' or plot == 'YES' or plot == 'Yes':
     plt.show()
 else:
     pass
 
-
+"""
 # write environment to file
 f2 = open('env.txt', 'w', newline='') 
 writer = csv.writer(f2, delimiter=',')
@@ -188,6 +201,13 @@ for wolf in wolves:
     listy.append(wolf.store) 
     writer.writerow(listy)
 f3.close()
+"""
+"""
+plt.plot(agents_pop)
+plt.plot(infants_pop)
+plt.ylabel('Population')
+plt.show()
+"""
 
 
 
