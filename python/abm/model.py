@@ -160,13 +160,15 @@ def update(misc):
     plt.imshow(environment)
     plt.ylabel('Y')
     plt.xlabel('X')
+    plt.title('Agent based model')
+    
     for agent in agents:
-        plt.scatter(agent.x, agent.y, s=50, c = 'white') 
+        plt.scatter(agent.x, agent.y, s=50, c = 'white', label = 'agents') 
     for wolf in wolves:
-        plt.scatter(wolf.x, wolf.y, s=50, c = 'black', marker = '*')
+        plt.scatter(wolf.x, wolf.y, s=50, c = 'black', marker = '*', label = 'wolves')
     for infant in infants:
-        plt.scatter(infant.x, infant.y, s=50, c = 'red') 
-
+        plt.scatter(infant.x, infant.y, s=50, c = 'red', label = 'infants') 
+    
 
 # generator function to supply data to update function and each frame of animation
 def gen_function(misc = []):

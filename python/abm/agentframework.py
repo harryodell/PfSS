@@ -1,7 +1,7 @@
 import random
 import math
 
-# Create agent class
+
 class Agent:
     
     """
@@ -18,6 +18,7 @@ class Agent:
         eat: Depletes the environment store at its location
         sick: Dumps its store in the environment having eaten too much
         share_with_neighboursbours: Agent shares its store evenly with neighbour
+        have_infant: Creates an instance of an infant class
         
     """
     
@@ -106,21 +107,19 @@ class Agent:
         
         
 class Infant(Agent):
+    
+    """
+    Infant class inherits behaviour from Agent class
+    """
+    
     def __init__(self, environment, neighbourhood):
         super().__init__(environment, neighbourhood)
     
-    #def __init__(self, environment, neighbourhood):
-     #   Agent.__init__(self, environment, neighbourhood)
-
-
-    # to have plot of agents over time
-    # have counter of agents
-    # have counter of iterations
-    
-
-
-# Create wolf class      
+        
+        
+        
 class Wolf:
+    
     """
     A single wolf in a pre-defined environment.
     
@@ -133,7 +132,8 @@ class Wolf:
         
     Behaviours:
         move: Move randomly around the environment
-        eat_sheep: Removes agents from environment and aquires agents store
+        eat_agents: Removes agents from environment and aquires agents store
+        eat_infants: Removes infants from environment and aquires infants store
     """
     
     # Constructor methods
