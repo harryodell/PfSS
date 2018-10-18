@@ -25,8 +25,8 @@ class Agent:
     # Constuctor methods
     def __init__(self, environment, neighbourhood):
         self.environment = environment        
-        self.y = random.randint(0, len(self.environment[1]))        
-        self.x = random.randint(0, len(self.environment))
+        self._y = random.randint(0, len(self.environment[1]))        
+        self._x = random.randint(0, len(self.environment))
         self.store = 0 
         self.neighbourhood = neighbourhood
 
