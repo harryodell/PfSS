@@ -204,12 +204,12 @@ for wolf in wolves:
     writer.writerow(listy)
 f3.close()
 """
-"""
+
 plt.plot(agents_pop)
 plt.plot(infants_pop)
 plt.ylabel('Population')
 plt.show()
-"""
+
 
 
 
