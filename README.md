@@ -15,6 +15,7 @@ The motivation behind this project was to fulfil the requirements for assessment
 For this assignment, it was required that we build a simple ABM, following on from an example provided in the course practicals. Additional and original contributions have been added including:
 
 * The introduction of wolves to the model
+* The addition of an infant class that inherits an Agents behaviour
 * Providing the user with system arguments to initialize model parameters
 * Inclusion of stopping conditions
 * Removal of agents list as a constructor method to increase model efficiency
