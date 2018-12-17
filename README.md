@@ -5,7 +5,7 @@ This repository contains code pertaining to a simple agent based model (ABM) tha
 The simulation runs until one of three stopping conditions are met:
 
 * The maximum number of iterations is met
-* The sheep have depleted the overall value of the environment by 50%
+* The sheep have depleted the overall value of the environment by 30%
 * All the sheep have been eaten
 
 ## Motivation
@@ -28,7 +28,7 @@ For this assignment, it was required that we build a simple ABM, following on fr
 
 The model runs from the command-line or terminal. The user should download or clone the repository and navigate (in the prompt) to the local directory. Then, the model runs as:
 
-```python model.py [arg1=100] [arg2=10] [arg3=1000] [arg4=20]```
+```python model.py [arg1=100] [arg2=10] [arg3=1000] [arg4=15]```
 
 where the arguments are defined as:
 
@@ -39,9 +39,9 @@ where the arguments are defined as:
 
 The arguments should be passed as integers, however, failing this the user will be given another opportunity. Given that no parameters are attempted to be passed or that the user has failed to pass the arguments correctly after three attempts, the model will revert to default parameters.
 
-### Visualization prompt
+Following the initialization of the model, the user will be asked to input whether they would like to save a plot of the agent and infant populations.
 
-Following the initialization of the model, the user will be asked to input whether they would like to see the visualization of the animation. We use ```matplotlib.animation.FuncAnimation()``` to make the animation - this function provides a plot of the current state of the model following each iteration and is recommended because of its use in helping the user understand the interactions within the model.
+Following this, an animation of the model will appear. We use ```matplotlib.animation.FuncAnimation()``` to make the animation - this function provides a plot of the current state of the model following each iteration and is recommended because of its use in helping the user understand the interactions within the model
 
 An example of the how the visualization should appear is given:
 
@@ -54,10 +54,12 @@ Environment at 1st iteration|  Environment after all sheep were eaten
 
 When the model stops running, it can be assumed that a stopping criterion has been fulfilled - the user will see which one printed to the command line. 
 
-Two files will then be written out to the same directory in which the code is in:
+Three files will then be written out to the same directory in which the code is in:
 
 * ```out.txt```: a text file providing a copy of the state of the environment at the end of the simulation
 * ```stored.txt```: a text file listing the stores of the **wolves** having consumed sheep and acquired their stores
+* ```population.png```: image showing the plot of agent and infant populations - if prompted by user
+
 
 ## License
 
