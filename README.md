@@ -41,7 +41,7 @@ The arguments should be passed as integers, however, failing this the user will 
 
 Following the initialization of the model, the user will be asked to input whether they would like to save a plot of the agent and infant populations.
 
-Following this, an animation of the model will appear. We use ```matplotlib.animation.FuncAnimation()``` to make the animation - this function provides a plot of the current state of the model following each iteration and is recommended because of its use in helping the user understand the interactions within the model
+Finally, when the model is running an animation will appear. We use ```matplotlib.animation.FuncAnimation()``` to make the animation - this function provides a plot of the current state of the model following each iteration and is recommended because of its use in helping the user understand the interactions within the model
 
 An example of the how the visualization should appear is given:
 
