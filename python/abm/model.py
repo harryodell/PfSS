@@ -140,9 +140,9 @@ def update(misc):
         wolf.eat_infants(neighbourhood, wolves, infants)
 
     ### stopping conditions
-    if sum(sum(x) for x in environment) < env_total*0.5:
+    if sum(sum(x) for x in environment) < env_total*0.7:
         carry_on = False
-        print("Stopping condition met - Environment depleted by %50")
+        print("Stopping condition met - Environment depleted by %70")
 
     if len(agents) == 0:
         carry_on = False
