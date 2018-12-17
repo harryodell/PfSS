@@ -33,10 +33,10 @@ if len(sys.argv) == 5:
 
 # If no effort is made to pass model parameters, default values will be assigned
 elif len(sys.argv) == 1:
-    num_of_agents = 100
+    num_of_agents = 50
     num_of_wolves = 5
-    num_of_iterations = 1000
-    neighbourhood = 20
+    num_of_iterations = 250
+    neighbourhood = 15
     print(f"No arguments attempted to be passed, running for default parameters: \n"
           f"{num_of_agents} Agents, {num_of_wolves} Wolves, "
           f"{num_of_iterations} iterations, neighbourhood of {neighbourhood}"
@@ -51,7 +51,7 @@ else:
 attempts = 0
 while True:
     try:
-        plot = str(input("Do you want to visualise the animation? Y/N: "))
+        plot = str(input("Do you want to save a plot of the populations? Y/N: "))
         break
     except ValueError:
         attempts += 1
@@ -59,7 +59,7 @@ while True:
             print("Please enter: Y/N")
             continue
         else:
-            print("Failed to pass argument correctly, visualisation will be made.")
+            print("Failed to pass argument correctly, plot will be saved.")
             plot = 'Y'
             break
 
@@ -179,14 +179,23 @@ def gen_function(misc = []):
 
 # animation 
 animation = matplotlib.animation.FuncAnimation(fig, update, interval = 100, frames=gen_function, repeat=False)
+plt.show()
 
-# plot animation if instructed by user
+
+# plot population results if instructed by user
 if plot == 'Y' or plot == 'y' or plot == 'yes' or plot == 'YES' or plot == 'Yes':
-    plt.show()
+    plt.clf()
+    plt.plot(agents_pop, label="agents")
+    plt.plot(infants_pop, label="wolves")
+    plt.ylabel('Population')
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+           ncol=2, mode="expand", borderaxespad=0.)
+    #plt.show()
+    plt.savefig('population.png', bbox_inches='tight')
 else:
     pass
 
-"""
+
 # write environment to file
 f2 = open('env.txt', 'w', newline='') 
 writer = csv.writer(f2, delimiter=',')
@@ -203,14 +212,3 @@ for wolf in wolves:
     listy.append(wolf.store) 
     writer.writerow(listy)
 f3.close()
-"""
-
-plt.plot(agents_pop)
-plt.plot(infants_pop)
-plt.ylabel('Population')
-plt.show()
-
-
-
-
-
